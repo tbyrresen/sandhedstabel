@@ -76,6 +76,8 @@ class Tokenizer {
                 }
             }
         }
+        tokens.push(new Token(tokenType.EOL, '', null));
+        return tokens;
     }
 }
 
