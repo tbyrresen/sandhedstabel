@@ -10,6 +10,18 @@ class TruthTableBuilder extends Component {
         }
     }
 
+    expressionChangeHandler = (event) => {
+        this.setState({
+            expression: event.target.value            
+        })
+    }
+
+    truthValueFormatChangeHandler = (event) => {
+        this.setState({
+            truthValueFormat: event.target.value
+        })
+    }
+
     render() {
         return (
             <div>
@@ -22,6 +34,7 @@ class TruthTableBuilder extends Component {
                             value="T/F"
                             name="truthValueFormat"
                             id="trueFalseFormat"
+                            onClick={this.truthValueFormatChangeHandler}
                             defaultChecked 
                         />
                         <Form.Check 
@@ -30,6 +43,7 @@ class TruthTableBuilder extends Component {
                             value="1/0"
                             name="truthValueFormat"
                             id="binaryFormat"
+                            onClick={this.truthValueFormatChangeHandler}
                         />
                     </Form.Group>
                     <Form.Group>                  
@@ -40,6 +54,8 @@ class TruthTableBuilder extends Component {
                             size="lg"
                             type="text"
                             placeholder="Dit udtryk her"
+                            onChange={this.expressionChangeHandler}
+                            onKeyPress={(event) => { event.key === 'Enter' && event.preventDefault() }}
                         />
                         <small>Eksempel på udtryk: a AND (b OR C)</small>                   
                     </Form.Group>
