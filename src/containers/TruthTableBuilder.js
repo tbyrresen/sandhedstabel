@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import Tokenizer from '../utils/tokenizer';
+import Parser from '../utils/parser';
 
 class TruthTableBuilder extends Component {
     constructor(props) {
@@ -19,8 +20,9 @@ class TruthTableBuilder extends Component {
                 this.setState({
                     valid: true,
                     error: null
-                })
+                })              
                 const tokens = Tokenizer.tokenize(this.state.expression);
+                Parser.parse(tokens);
             }
             catch (error) {
                 this.setState({

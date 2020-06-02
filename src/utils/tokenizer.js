@@ -1,21 +1,21 @@
 import Token from './token';
 
-const tokenType = {
-    NOT: 1,
-    AND: 2,
-    NAND: 3,
-    OR: 4,
-    XOR: 5,
-    NOR: 6,
-    IMPLY: 7,
-    XNOR: 8,
-    LEFTPAREN: 9,
-    RIGHTPAREN: 10,
-    VARIABLE: 11,
-    EOL: 12
-}
-
 class Tokenizer {
+    static tokenType = {
+        NOT: 'NOT',
+        AND: 'AND',
+        NAND: 'NAND',
+        OR: 'OR',
+        XOR: 'XOR',
+        NOR: 'NOR',
+        IMPLY: 'IMPLY',
+        XNOR: 'XNOR',
+        LEFTPAREN: 'Venstre parentes',
+        RIGHTPAREN: 'Højre parentes',
+        VARIABLE: 'Variabel',
+        EOL: 'Afsluttet udtryk'
+    }
+
     static tokenize = (expression) => {
         const tokens = [];
         const charArr = expression.split('');
@@ -26,11 +26,11 @@ class Tokenizer {
                 i++;
             }
             else if (charArr[i] === '(') {
-                tokens.push(new Token(tokenType.LEFTPAREN, '(', null));
+                tokens.push(new Token(this.tokenType.LEFTPAREN, '(', null));
                 i++;
             }
             else if (charArr[i] === ')') {
-                tokens.push(new Token(tokenType.RIGHTPAREN, ')', null));
+                tokens.push(new Token(this.tokenType.RIGHTPAREN, ')', null));
                 i++;
             }
             else {
@@ -48,35 +48,35 @@ class Tokenizer {
                 const tokenString = tokenChars.join('');
                 switch (tokenString.toUpperCase()) {
                     case 'NOT':
-                        tokens.push(new Token(tokenType.NOT, 'NOT', null));
+                        tokens.push(new Token(this.tokenType.NOT, 'NOT', null));
                         break;
                     case 'AND': 
-                        tokens.push(new Token(tokenType.AND, 'AND', null));
+                        tokens.push(new Token(this.tokenType.AND, 'AND', null));
                         break;
                     case 'NAND': 
-                        tokens.push(new Token(tokenType.NAND, 'NAND', null));
+                        tokens.push(new Token(this.tokenType.NAND, 'NAND', null));
                         break;
                     case 'OR': 
-                        tokens.push(new Token(tokenType.OR, 'OR', null));
+                        tokens.push(new Token(this.tokenType.OR, 'OR', null));
                         break;
                     case 'XOR': 
-                        tokens.push(new Token(tokenType.XOR, 'XOR', null));
+                        tokens.push(new Token(this.tokenType.XOR, 'XOR', null));
                         break;
                     case 'NOR': 
-                        tokens.push(new Token(tokenType.NOR, 'NOR', null));
+                        tokens.push(new Token(this.tokenType.NOR, 'NOR', null));
                         break;
                     case 'IMPLY': 
-                        tokens.push(new Token(tokenType.IMPLY, 'IMPLY', null));
+                        tokens.push(new Token(this.tokenType.IMPLY, 'IMPLY', null));
                         break;     
                     case 'XNOR': 
-                        tokens.push(new Token(tokenType.XNOR, 'XNOR', null));
+                        tokens.push(new Token(this.tokenType.XNOR, 'XNOR', null));
                         break;              
                     default:
-                        tokens.push(new Token(tokenType.VARIABLE, tokenString, null));
+                        tokens.push(new Token(this.tokenType.VARIABLE, tokenString, null));
                 }
             }
         }
-        tokens.push(new Token(tokenType.EOL, '', null));
+        tokens.push(new Token(this.tokenType.EOL, '', null));
         return tokens;
     }
 }
