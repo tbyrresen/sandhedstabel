@@ -1,5 +1,10 @@
 import Token from './token';
 
+/*
+Tokenizes the input expression and returns an array of the resulting tokens.
+If any illegal character is encountered, an error is thrown.
+*/
+
 class Tokenizer {
     static tokenType = {
         NOT: 'NOT',
