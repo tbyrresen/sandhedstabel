@@ -22,7 +22,7 @@ class TruthTableBuilder extends Component {
                     error: null
                 })              
                 const tokens = Tokenizer.tokenize(this.state.expression);
-                Parser.parse(tokens);
+                const expressionTree = Parser.parse(tokens);
             }
             catch (error) {
                 this.setState({

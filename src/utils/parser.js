@@ -1,9 +1,15 @@
 import Tokenizer from './tokenizer';
+import BinaryNode from './tree_nodes/binaryNode';
+import UnaryNode from './tree_nodes/unaryNode';
+import VariableNode from './tree_nodes/variableNode';
 
 /*
 Parses the provided tokens using a recursive descent strategy. Progresses through the tokens
 by calling the accept method to continuously match tokens according to the grammar. If the accept 
 method is called with an invalid token, an error is thrown. 
+The final result of the parse is an expression parse with a structure that guarantees the desired 
+precedence and associativty of operators given that the tree is evaluated using a depth-first 
+post-order traversal
 */
 class Parser {
     static tokens;
@@ -14,14 +20,15 @@ class Parser {
         this.tokens = tokens;
         this.currentIdx = 0;
         this.currentToken = tokens[this.currentIdx];
-        this.expression();
+        const expressionTree = this.expression();
         this.accept(Tokenizer.tokenType.EOL);
+        return expressionTree;
     }
 
     static expression = () => {
         if (this.currentToken.type === Tokenizer.tokenType.NOT || this.currentToken.type === Tokenizer.tokenType.LEFTPAREN ||
             this.currentToken.type === Tokenizer.tokenType.VARIABLE) {
-            this.biconditional();
+            return this.biconditional();
         }
         else {
             throw new Error('Forventede: NOT operator, venstre parentes eller en variabel')
@@ -29,70 +36,94 @@ class Parser {
     }
 
     static biconditional = () => {
-        this.implication();
+        let node = this.implication();
         while (this.currentToken.type === Tokenizer.tokenType.XNOR) {
-            this.accept(Tokenizer.tokenType.XNOR);
-            this.implication();
+            const op = this.currentToken.type;
+            this.accept(Tokenizer.tokenType.XNOR);          
+            const rhs = this.implication();
+            node = new BinaryNode(node, op, rhs);
         }
+        return node;
     }
 
     static implication = () => {
-        this.orOperation();
+        let node = this.orOperation();
         while (this.currentToken.type === Tokenizer.tokenType.IMPLY) {
+            const op = this.currentToken.type;
             this.accept(Tokenizer.tokenType.IMPLY);
-            this.orOperation();
+            const rhs = this.orOperation();
+            node = new BinaryNode(node, op, rhs);
         }
+        return node;
     }
 
     static orOperation = () => {
-        this.andOperation();
+        let node = this.andOperation();
+        let op;
         while (this.currentToken.type === Tokenizer.tokenType.OR || this.currentToken.type === Tokenizer.tokenType.XOR ||
             this.currentToken.type === Tokenizer.tokenType.NOR) {
-            if (this.currentToken.type === Tokenizer.tokenType.OR) {
-                this.accept(Tokenizer.tokenType.OR);
+            if (this.currentToken.type === Tokenizer.tokenType.OR) {            
+                op = this.currentToken.type;  
+                this.accept(Tokenizer.tokenType.OR);             
             }
             else if (this.currentToken.type === Tokenizer.tokenType.XOR) {
-                this.accept(Tokenizer.tokenType.XOR);
+                op = this.currentToken.type;
+                this.accept(Tokenizer.tokenType.XOR);               
             }
             else {
-                this.accept(Tokenizer.tokenType.NOR);
+                op = this.currentToken.type;
+                this.accept(Tokenizer.tokenType.NOR);              
             }
-            this.andOperation();                    
+            const rhs = this.andOperation();   
+            node = new BinaryNode(node, op, rhs);                 
         }
+        return node;
     }
 
     static andOperation = () => {
-        this.notOperation();
+        let node = this.notOperation();
+        let op;
         while (this.currentToken.type === Tokenizer.tokenType.AND || this.currentToken.type === Tokenizer.tokenType.NAND) {
             if (this.currentToken.type === Tokenizer.tokenType.AND) {
+                op = this.currentToken.type;
                 this.accept(Tokenizer.tokenType.AND);
             }
             else {
+                op = this.currentToken.type;
                 this.accept(Tokenizer.tokenType.NAND);
             }
-            this.notOperation();
+            const rhs = this.notOperation();
+            node = new BinaryNode(node, op, rhs);
         }
+        return node;
     }
 
     static notOperation = () => {
+        let node;
         if (this.currentToken.type === Tokenizer.tokenType.NOT) {
+            const op = this.currentToken.type;
             this.accept(Tokenizer.tokenType.NOT);
-            this.notOperation();
+            const child = this.notOperation();
+            node = new UnaryNode(op, child);
         }
         else {
-            this.primary();    
+            node = this.primary();    
         }
+        return node;
     }
 
     static primary = () => {
+        let node;
         if (this.currentToken.type === Tokenizer.tokenType.LEFTPAREN) {
             this.accept(Tokenizer.tokenType.LEFTPAREN);
-            this.expression();       
+            node = this.expression();       
             this.accept(Tokenizer.tokenType.RIGHTPAREN);      
         }
         else {
+            node = new VariableNode(this.currentToken.spelling);
             this.accept(Tokenizer.tokenType.VARIABLE);
         }
+        return node;
     }
 
     static accept = (expectedType) => {
