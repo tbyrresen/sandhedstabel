@@ -20,7 +20,7 @@ class TruthTableBuilder extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-        if (prevState.expression !== this.state.expression) {
+        if (prevState.expression !== this.state.expression || prevState.truthValueFormat !== this.state.truthValueFormat) {
             try {
                 this.setState({
                     valid: true,
