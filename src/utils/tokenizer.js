@@ -53,35 +53,35 @@ class Tokenizer {
                 const tokenString = tokenChars.join('');
                 switch (tokenString.toUpperCase()) {
                     case 'NOT':
-                        tokens.push(new Token(this.tokenType.NOT, 'NOT', null));
+                        tokens.push(new Token(this.tokenType.NOT, 'NOT'));
                         break;
                     case 'AND': 
-                        tokens.push(new Token(this.tokenType.AND, 'AND', null));
+                        tokens.push(new Token(this.tokenType.AND, 'AND'));
                         break;
                     case 'NAND': 
-                        tokens.push(new Token(this.tokenType.NAND, 'NAND', null));
+                        tokens.push(new Token(this.tokenType.NAND, 'NAND'));
                         break;
                     case 'OR': 
-                        tokens.push(new Token(this.tokenType.OR, 'OR', null));
+                        tokens.push(new Token(this.tokenType.OR, 'OR'));
                         break;
                     case 'XOR': 
-                        tokens.push(new Token(this.tokenType.XOR, 'XOR', null));
+                        tokens.push(new Token(this.tokenType.XOR, 'XOR'));
                         break;
                     case 'NOR': 
-                        tokens.push(new Token(this.tokenType.NOR, 'NOR', null));
+                        tokens.push(new Token(this.tokenType.NOR, 'NOR'));
                         break;
                     case 'IMPLY': 
-                        tokens.push(new Token(this.tokenType.IMPLY, 'IMPLY', null));
+                        tokens.push(new Token(this.tokenType.IMPLY, 'IMPLY'));
                         break;     
                     case 'XNOR': 
-                        tokens.push(new Token(this.tokenType.XNOR, 'XNOR', null));
+                        tokens.push(new Token(this.tokenType.XNOR, 'XNOR'));
                         break;              
                     default:
-                        tokens.push(new Token(this.tokenType.VARIABLE, tokenString, null));
+                        tokens.push(new Token(this.tokenType.VARIABLE, tokenString));
                 }
             }
         }
-        tokens.push(new Token(this.tokenType.EOL, '', null));
+        tokens.push(new Token(this.tokenType.EOL, ''));
         return tokens;
     }
 }
