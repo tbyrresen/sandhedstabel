@@ -29,9 +29,9 @@ class TruthTableBuilder extends Component {
                 const tokens = Tokenizer.tokenize(this.state.expression);
                 const expressionTree = Parser.parse(tokens);
                 const operands = this.getOperandsFromTokens(tokens);
-                const numVars = operands.length;
-                const numRows = Math.pow(2, numVars);
-                const currentNumSameBool = new Array(numVars).fill(0);
+                const numOperands = operands.length;
+                const numRows = Math.pow(2, numOperands);
+                const currentNumSameBool = new Array(numOperands).fill(0);
                 const targetNumSameBool = [];   
                 const currentBool = [];    
                 const tableRows = this.initTableRows(numRows);  
@@ -41,13 +41,13 @@ class TruthTableBuilder extends Component {
                     tableRows: tableRows
                 })                
 
-                for (let i = 0; i < numVars; i++) {
-                    targetNumSameBool[i] = Math.pow(2, numVars - (i + 1));
+                for (let i = 0; i < numOperands; i++) {
+                    targetNumSameBool[i] = Math.pow(2, numOperands - (i + 1));
                     currentBool[i] = true;
                 }
 
                 for (let i = 0; i < numRows; i++) {
-                    for (let j = 0; j < numVars; j++) {                    
+                    for (let j = 0; j < numOperands; j++) {                    
                         if (currentNumSameBool[j] < targetNumSameBool[j]) {
                             currentNumSameBool[j]++;
                         }
@@ -58,7 +58,7 @@ class TruthTableBuilder extends Component {
                         tableRows[i][j] = this.convertBoolToTruthValueString(currentBool[j]);
                         operandToBoolMapping[operands[j]] = currentBool[j];
                     }
-                    tableRows[i][numVars] = this.convertBoolToTruthValueString(TreeEvaluator.evaluate(expressionTree, operandToBoolMapping));
+                    tableRows[i][numOperands] = this.convertBoolToTruthValueString(TreeEvaluator.evaluate(expressionTree, operandToBoolMapping));
                     operandToBoolMapping.clear();
                 }
             }
