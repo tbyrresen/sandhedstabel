@@ -1,5 +1,5 @@
 class Token {
-    constructor(type, spelling, value) {
+    constructor(type, spelling) {
         this.type = type;
         this.spelling = spelling;
     }
