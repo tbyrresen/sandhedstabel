@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
+
 import Tokenizer from '../utils/tokenizer';
 import Parser from '../utils/parser';
 import TreeEvaluator from '../utils/treeEvaluator';
+import TruthTable from '../components/truthTable';
 
 class TruthTableBuilder extends Component {
     constructor(props) {
@@ -11,10 +13,11 @@ class TruthTableBuilder extends Component {
             expression: "",
             truthValueFormat: "T/F",
             valid: true,
-            error: null
+            error: "",
+            variables: [],
+            tableRows: [[]],
         }
     }
-
 
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.expression !== this.state.expression) {
@@ -32,7 +35,11 @@ class TruthTableBuilder extends Component {
                 const targetNumSameBool = [];   
                 const currentBool = [];    
                 const tableRows = this.initTableRows(numRows);  
-                const varToBoolMapping = new Map();       
+                const varToBoolMapping = new Map();    
+                this.setState({
+                    variables: variables,
+                    tableRows: tableRows
+                })                
 
                 for (let i = 0; i < numVars; i++) {
                     targetNumSameBool[i] = Math.pow(2, numVars - (i + 1));
@@ -122,9 +129,10 @@ class TruthTableBuilder extends Component {
                             placeholder="Dit udtryk her"
                             onChange={this.expressionChangeHandler}
                             onKeyPress={(event) => { event.key === 'Enter' && event.preventDefault() }} />
-                        <small>Eksempel på udtryk: a AND (b OR C)</small>      
-                        {this.state.valid ? <p className="text-success">TODO</p> :
-                        <p className="text-danger">{this.state.error.message}</p>}             
+                        <small>Eksempel på udtryk: a AND (b OR c)</small>      
+                        {this.state.valid ? this.state.expression.length !== 0 ?
+                        <TruthTable expression={this.state.expression} variables={this.state.variables} tableRows={this.state.tableRows} />
+                        : null : this.state.expression.length !== 0 ? <p className="text-danger">{this.state.error.message}</p> : null}             
                     </Form.Group>
                 </Form>
             </div>
