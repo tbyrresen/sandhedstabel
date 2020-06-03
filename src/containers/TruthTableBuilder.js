@@ -131,7 +131,7 @@ class TruthTableBuilder extends Component {
                     </Form.Group>
                     <Form.Group>                  
                         <Form.Text className="text-muted">
-                            Dit udtryk evalueres automatisk
+                            Dit udtryk evalueres automatisk og giver fejlbesked hvis udtrykket ikke er veldefineret
                         </Form.Text> 
                         <Form.Control
                             size="lg"
