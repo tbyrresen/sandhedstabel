@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import Tokenizer from '../utils/tokenizer';
 import Parser from '../utils/parser';
+import TreeEvaluator from '../utils/treeEvaluator';
 
 class TruthTableBuilder extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class TruthTableBuilder extends Component {
         }
     }
 
+
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.expression !== this.state.expression) {
             try {
@@ -23,6 +25,35 @@ class TruthTableBuilder extends Component {
                 })              
                 const tokens = Tokenizer.tokenize(this.state.expression);
                 const expressionTree = Parser.parse(tokens);
+                const variables = tokens.filter(e => e.type === Tokenizer.tokenType.VARIABLE);
+                const numVars = variables.length;
+                const numRows = Math.pow(2, numVars);
+                const currentNumSameBool = new Array(numVars).fill(0);
+                const targetNumSameBool = [];   
+                const currentBool = [];    
+                const tableRows = this.initTableRows(numRows);  
+                const varToBoolMapping = new Map();       
+
+                for (let i = 0; i < numVars; i++) {
+                    targetNumSameBool[i] = Math.pow(2, numVars - (i + 1));
+                    currentBool[i] = true;
+                }
+
+                for (let i = 0; i < numRows; i++) {
+                    for (let j = 0; j < numVars; j++) {                    
+                        if (currentNumSameBool[j] < targetNumSameBool[j]) {
+                            currentNumSameBool[j]++;
+                        }
+                        else {
+                            currentBool[j] = !currentBool[j];
+                            currentNumSameBool[j] = 1;
+                        }
+                        tableRows[i][j] = this.convertBoolToTruthValueString(currentBool[j]);
+                        varToBoolMapping[variables[j].spelling] = currentBool[j];
+                    }
+                    tableRows[i][numVars] = this.convertBoolToTruthValueString(TreeEvaluator.evaluate(expressionTree, varToBoolMapping));
+                    varToBoolMapping.clear();
+                }
             }
             catch (error) {
                 this.setState({
@@ -31,6 +62,20 @@ class TruthTableBuilder extends Component {
                 })
             }
         }        
+    }
+
+    initTableRows = (numRows) => {
+        const arr = [];
+        for (let i = 0; i < numRows; i++) {
+            arr[i] = [];
+        }
+        return arr;
+    }
+
+    // converts a boolean value to the correct truth value string according to the current truth value format
+    convertBoolToTruthValueString = (bool) => {
+        const formatStrings = this.state.truthValueFormat.split('/');
+        return bool ? formatStrings[0] : formatStrings[1];
     }
 
     expressionChangeHandler = (event) => {
