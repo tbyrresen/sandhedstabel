@@ -3,7 +3,7 @@ import React from 'react';
 const truthTable = (props) => {
     const columnHeaders = [];
     for (let i = 0; i < props.variables.length; i++) {
-        columnHeaders.push(<th scope="col">{props.variables[i].spelling}</th>)
+        columnHeaders.push(<th scope="col">{props.variables[i]}</th>)
     }
 
     const rowEntries = [];

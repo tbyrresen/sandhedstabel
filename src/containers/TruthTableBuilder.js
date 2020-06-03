@@ -28,7 +28,7 @@ class TruthTableBuilder extends Component {
                 })              
                 const tokens = Tokenizer.tokenize(this.state.expression);
                 const expressionTree = Parser.parse(tokens);
-                const variables = tokens.filter(e => e.type === Tokenizer.tokenType.VARIABLE);
+                const variables = this.getVariablesFromTokens(tokens);
                 const numVars = variables.length;
                 const numRows = Math.pow(2, numVars);
                 const currentNumSameBool = new Array(numVars).fill(0);
@@ -69,6 +69,16 @@ class TruthTableBuilder extends Component {
                 })
             }
         }        
+    }
+
+    getVariablesFromTokens = (tokens) => {
+        const variables = [];
+        for (let i = 0; i < tokens.length; i++) {
+            if (tokens[i].type === Tokenizer.tokenType.VARIABLE && !variables.includes(tokens[i].spelling)) {
+                variables.push(tokens[i].spelling);
+            }
+        }
+        return variables;
     }
 
     initTableRows = (numRows) => {
