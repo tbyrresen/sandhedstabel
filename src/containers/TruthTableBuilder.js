@@ -19,6 +19,14 @@ class TruthTableBuilder extends Component {
         }
     }
 
+    /*
+    Generates entries of all rows of the truth table corresponding to the current entered expression by:
+    (1) tokenizing the expression
+    (2) parsing the tokens to build an expression tree
+    (3) generating boolean values for each row except for the last entry such that the rows exhaust all possible table configurations
+    (4) evaluating the tree from (2) for each row of (3) to produce the final entry value of that row
+    If an error occurs at any stage, the error message is stored in the component state 
+    */
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.expression !== this.state.expression || prevState.truthValueFormat !== this.state.truthValueFormat) {
             try {
