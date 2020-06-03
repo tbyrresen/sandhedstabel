@@ -17,7 +17,7 @@ class Tokenizer {
         XNOR: 'XNOR',
         LEFTPAREN: 'Venstre parentes',
         RIGHTPAREN: 'Højre parentes',
-        VARIABLE: 'Variabel',
+        OPERAND: 'Operand',
         EOL: 'Afsluttet udtryk'
     }
 
@@ -77,7 +77,7 @@ class Tokenizer {
                         tokens.push(new Token(this.tokenType.XNOR, 'XNOR'));
                         break;              
                     default:
-                        tokens.push(new Token(this.tokenType.VARIABLE, tokenString));
+                        tokens.push(new Token(this.tokenType.OPERAND, tokenString));
                 }
             }
         }

@@ -1,7 +1,7 @@
-class VariableNode {
+class OperandNode {
     constructor(spelling) {
         this.spelling = spelling;
     }
 }
 
-export default VariableNode;
+export default OperandNode;

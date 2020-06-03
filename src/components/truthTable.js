@@ -2,14 +2,14 @@ import React from 'react';
 
 const truthTable = (props) => {
     const columnHeaders = [];
-    for (let i = 0; i < props.variables.length; i++) {
-        columnHeaders.push(<th scope="col">{props.variables[i]}</th>)
+    for (let i = 0; i < props.operands.length; i++) {
+        columnHeaders.push(<th scope="col">{props.operands[i]}</th>)
     }
 
     const rowEntries = [];
     for (let i = 0; i < props.tableRows.length; i++) {
         rowEntries.push([]);
-        for (let j = 0; j < props.variables.length + 1; j++) {
+        for (let j = 0; j < props.operands.length + 1; j++) {
             rowEntries[i].push(<td align="center">{props.tableRows[i][j]}</td>)
         }
     }

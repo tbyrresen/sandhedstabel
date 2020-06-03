@@ -14,7 +14,7 @@ class TruthTableBuilder extends Component {
             truthValueFormat: "T/F",
             valid: true,
             error: "",
-            variables: [],
+            operands: [],
             tableRows: [[]],
         }
     }
@@ -28,16 +28,16 @@ class TruthTableBuilder extends Component {
                 })              
                 const tokens = Tokenizer.tokenize(this.state.expression);
                 const expressionTree = Parser.parse(tokens);
-                const variables = this.getVariablesFromTokens(tokens);
-                const numVars = variables.length;
+                const operands = this.getOperandsFromTokens(tokens);
+                const numVars = operands.length;
                 const numRows = Math.pow(2, numVars);
                 const currentNumSameBool = new Array(numVars).fill(0);
                 const targetNumSameBool = [];   
                 const currentBool = [];    
                 const tableRows = this.initTableRows(numRows);  
-                const varToBoolMapping = new Map();    
+                const operandToBoolMapping = new Map();    
                 this.setState({
-                    variables: variables,
+                    operands: operands,
                     tableRows: tableRows
                 })                
 
@@ -56,10 +56,10 @@ class TruthTableBuilder extends Component {
                             currentNumSameBool[j] = 1;
                         }
                         tableRows[i][j] = this.convertBoolToTruthValueString(currentBool[j]);
-                        varToBoolMapping[variables[j]] = currentBool[j];
+                        operandToBoolMapping[operands[j]] = currentBool[j];
                     }
-                    tableRows[i][numVars] = this.convertBoolToTruthValueString(TreeEvaluator.evaluate(expressionTree, varToBoolMapping));
-                    varToBoolMapping.clear();
+                    tableRows[i][numVars] = this.convertBoolToTruthValueString(TreeEvaluator.evaluate(expressionTree, operandToBoolMapping));
+                    operandToBoolMapping.clear();
                 }
             }
             catch (error) {
@@ -71,14 +71,14 @@ class TruthTableBuilder extends Component {
         }        
     }
 
-    getVariablesFromTokens = (tokens) => {
-        const variables = [];
+    getOperandsFromTokens = (tokens) => {
+        const operands = [];
         for (let i = 0; i < tokens.length; i++) {
-            if (tokens[i].type === Tokenizer.tokenType.VARIABLE && !variables.includes(tokens[i].spelling)) {
-                variables.push(tokens[i].spelling);
+            if (tokens[i].type === Tokenizer.tokenType.OPERAND && !operands.includes(tokens[i].spelling)) {
+                operands.push(tokens[i].spelling);
             }
         }
-        return variables;
+        return operands;
     }
 
     initTableRows = (numRows) => {
@@ -141,7 +141,7 @@ class TruthTableBuilder extends Component {
                             onKeyPress={(event) => { event.key === 'Enter' && event.preventDefault() }} />
                         <small>Eksempel på udtryk: a AND (b OR c)</small>      
                         {this.state.valid ? this.state.expression.length !== 0 ?
-                        <TruthTable expression={this.state.expression} variables={this.state.variables} tableRows={this.state.tableRows} />
+                        <TruthTable expression={this.state.expression} operands={this.state.operands} tableRows={this.state.tableRows} />
                         : null : this.state.expression.length !== 0 ? <p className="text-danger">{this.state.error.message}</p> : null}             
                     </Form.Group>
                 </Form>

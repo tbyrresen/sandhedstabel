@@ -1,7 +1,7 @@
 import Tokenizer from './tokenizer';
 import BinaryNode from './tree_nodes/binaryNode';
 import UnaryNode from './tree_nodes/unaryNode';
-import VariableNode from './tree_nodes/variableNode';
+import OperandNode from './tree_nodes/operandNode';
 import OperatorNode from './tree_nodes/operatorNode';
 
 /*
@@ -28,11 +28,11 @@ class Parser {
 
     static expression = () => {
         if (this.currentToken.type === Tokenizer.tokenType.NOT || this.currentToken.type === Tokenizer.tokenType.LEFTPAREN ||
-            this.currentToken.type === Tokenizer.tokenType.VARIABLE) {
+            this.currentToken.type === Tokenizer.tokenType.OPERAND) {
             return this.biconditional();
         }
         else {
-            throw new Error('Forventede: NOT operator, venstre parentes eller en variabel')
+            throw new Error('Forventede: NOT operator, venstre parentes eller en operand')
         }
     }
 
@@ -121,8 +121,8 @@ class Parser {
             this.accept(Tokenizer.tokenType.RIGHTPAREN);      
         }
         else {
-            node = new VariableNode(this.currentToken.spelling);
-            this.accept(Tokenizer.tokenType.VARIABLE);
+            node = new OperandNode(this.currentToken.spelling);
+            this.accept(Tokenizer.tokenType.OPERAND);
         }
         return node;
     }
