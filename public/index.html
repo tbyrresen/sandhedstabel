@@ -1,126 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Sandhedstabel.dk</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+        name="description"
+        content="Web site created using create-react-app"
+        />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <title>Sandhedstabel.dk</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
 
-  <div class="jumbotron jumbotron-fluid text-center" style="background-color: #659DBD;">
-    <div class="container">
-        <h1 class="display-3">Sandhedstabel</h1>
-        Generer sandhedstabel ud fra udtryk involverende logiske operatorer. De logiske operatorer og deres respektive 
-        symboler findes i øverste tabel til venstre. Symbolerne kan skrives både med store og små bogstaver, og variabler 
-        i udtryk kan bestå af alle bogstaver A-Z både store og små. Alle operatorer er venstre associative bortset
-        fra NOT operatoren som er højre associativ. Præcedens niveauer for de forskellige operatorer ses i nederste tabel,
-        hvor 1 har højeste prioritet og 5 lavest. Regler for præcedens kan omgås ved brug af parenteser.          
+    <div class="jumbotron jumbotron-fluid text-center" style="background-color: #659DBD;">
+        <div class="container">
+            <h1 class="display-3">Sandhedstabel</h1>
+            Generer sandhedstabel ud fra udtryk involverende logiske operatorer. De logiske operatorer og deres respektive 
+            symboler findes i øverste tabel til venstre. Symbolerne kan skrives både med store og små bogstaver, og variabler 
+            i udtryk kan bestå af alle bogstaver A-Z både store og små. Alle operatorer er venstre associative bortset
+            fra NOT operatoren som er højre associativ. Præcedens niveauer for de forskellige operatorer ses i nederste tabel,
+            hvor 1 har højeste prioritet og 5 lavest. Regler for præcedens kan omgås ved brug af parenteser.          
+        </div>
     </div>
-  </div>
-  <div class="container">
-      <div class="row">
-          <div class="col-md-4 mb-3">
-              <div class="card">
-                  <div class="card-header" style="background-color: #DAAD86;">
-                      Logiske operatorer
-                  </div>
-                  <div class="card-body">
-                      <table class="table table-borderless">
-                          <thead>
-                              <tr>
-                                  <th>Logisk konnektiv</th>
-                                  <th>Symbol</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>Negation</td>
-                                  <td>NOT</td>
-                              </tr>
-                              <tr>
-                                  <td>Konjuktion</td>
-                                  <td>AND</td>
-                              </tr>
-                              <tr>
-                                <td>Alternativ afvisning</td>
-                                <td>NAND</td>
-                              </tr>
-                              <tr>
-                                  <td>Disjunktion</td>
-                                  <td>OR</td>
-                              </tr>                           
-                              <tr>
-                                  <td>Ekslusiv disjunktion</td>
-                                  <td>XOR</td>
-                              </tr>
-                              <tr>
-                                <td>Gensidig afvisning</td>
-                                <td>NOR</td>
-                              </tr>
-                              <tr>
-                                  <td>Implikation</td>
-                                  <td>IMPLY</td>
-                              </tr>
-                              <tr>
-                                  <td>Biimplikation</td>
-                                  <td>XNOR</td>
-                              </tr>                                                       
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-8 mb-3">
-            <div id="root"></div>
-          </div>       
-          <div class="col-md-4 mb-3">
-              <div class="card">
-                  <div class="card-header" style="background-color: #DAAD86;">
-                      Præcedens for operatorer
-                  </div>
-                  <div class="card-body">
-                    <table class="table table-borderless">
-                        <thead>
-                            <tr>
-                                <th>Logisk konnektiv</th>
-                                <th>Præcedens</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>NOT</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>AND, NAND</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td>OR, XOR, NOR</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <td>IMPLY</td>
-                                <td>4</td>
-                            </tr>
-                            <tr>
-                                <td>XNOR</td>
-                                <td>5</td>
-                            </tr>
-                        </tbody>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  </body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #DAAD86;">
+                                Logiske operatorer
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Logisk konnektiv</th>
+                                            <th>Symbol</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Negation</td>
+                                            <td>NOT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Konjuktion</td>
+                                            <td>AND</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alternativ afvisning</td>
+                                            <td>NAND</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Disjunktion</td>
+                                            <td>OR</td>
+                                        </tr>                           
+                                        <tr>
+                                            <td>Ekslusiv disjunktion</td>
+                                            <td>XOR</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gensidig afvisning</td>
+                                            <td>NOR</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Implikation</td>
+                                            <td>IMPLY</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biimplikation</td>
+                                            <td>XNOR</td>
+                                        </tr>                                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+                <div class="row">                                
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #DAAD86;">
+                                Præcedens for operatorer
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Logisk konnektiv</th>
+                                            <th>Præcedens</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>NOT</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AND, NAND</td>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>OR, XOR, NOR</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>IMPLY</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td>XNOR</td>
+                                            <td>5</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+            </div>     
+            <div class="col-md-8 mb-3">
+                <div id="root"></div>
+            </div>    
+        </div>
+    </div>
+    </body>
 </html>
