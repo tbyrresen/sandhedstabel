@@ -17,7 +17,7 @@ class TreeEvaluator {
             const rhsResult = this.evaluate(expressionTree.rhs, varToBoolMapping);
 
             let binaryNodeResult;
-            switch (expressionTree.op) {
+            switch (expressionTree.op.spelling) {
                 case 'AND':
                     binaryNodeResult = lhsResult && rhsResult;
                     break;
@@ -48,7 +48,7 @@ class TreeEvaluator {
             const childResult = this.evaluate(expressionTree.child, varToBoolMapping);
 
             let unaryNodeResult;
-            switch (expressionTree.op) {
+            switch (expressionTree.op.spelling) {
                 case 'NOT':
                     unaryNodeResult = !childResult;
                     break;

@@ -56,7 +56,7 @@ class TruthTableBuilder extends Component {
                             currentNumSameBool[j] = 1;
                         }
                         tableRows[i][j] = this.convertBoolToTruthValueString(currentBool[j]);
-                        varToBoolMapping[variables[j].spelling] = currentBool[j];
+                        varToBoolMapping[variables[j]] = currentBool[j];
                     }
                     tableRows[i][numVars] = this.convertBoolToTruthValueString(TreeEvaluator.evaluate(expressionTree, varToBoolMapping));
                     varToBoolMapping.clear();

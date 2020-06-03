@@ -2,6 +2,7 @@ import Tokenizer from './tokenizer';
 import BinaryNode from './tree_nodes/binaryNode';
 import UnaryNode from './tree_nodes/unaryNode';
 import VariableNode from './tree_nodes/variableNode';
+import OperatorNode from './tree_nodes/operatorNode';
 
 /*
 Parses the provided tokens using a recursive descent strategy. Progresses through the tokens
@@ -38,7 +39,7 @@ class Parser {
     static biconditional = () => {
         let node = this.implication();
         while (this.currentToken.type === Tokenizer.tokenType.XNOR) {
-            const op = this.currentToken.type;
+            const op = new OperatorNode(this.currentToken.spelling);
             this.accept(Tokenizer.tokenType.XNOR);          
             const rhs = this.implication();
             node = new BinaryNode(node, op, rhs);
@@ -49,7 +50,7 @@ class Parser {
     static implication = () => {
         let node = this.orOperation();
         while (this.currentToken.type === Tokenizer.tokenType.IMPLY) {
-            const op = this.currentToken.type;
+            const op = new OperatorNode(this.currentToken.spelling);
             this.accept(Tokenizer.tokenType.IMPLY);
             const rhs = this.orOperation();
             node = new BinaryNode(node, op, rhs);
@@ -63,15 +64,15 @@ class Parser {
         while (this.currentToken.type === Tokenizer.tokenType.OR || this.currentToken.type === Tokenizer.tokenType.XOR ||
             this.currentToken.type === Tokenizer.tokenType.NOR) {
             if (this.currentToken.type === Tokenizer.tokenType.OR) {            
-                op = this.currentToken.type;  
+                op = new OperatorNode(this.currentToken.spelling);
                 this.accept(Tokenizer.tokenType.OR);             
             }
             else if (this.currentToken.type === Tokenizer.tokenType.XOR) {
-                op = this.currentToken.type;
+                op = new OperatorNode(this.currentToken.spelling);
                 this.accept(Tokenizer.tokenType.XOR);               
             }
             else {
-                op = this.currentToken.type;
+                op = new OperatorNode(this.currentToken.spelling);
                 this.accept(Tokenizer.tokenType.NOR);              
             }
             const rhs = this.andOperation();   
@@ -85,11 +86,11 @@ class Parser {
         let op;
         while (this.currentToken.type === Tokenizer.tokenType.AND || this.currentToken.type === Tokenizer.tokenType.NAND) {
             if (this.currentToken.type === Tokenizer.tokenType.AND) {
-                op = this.currentToken.type;
+                op = new OperatorNode(this.currentToken.spelling);
                 this.accept(Tokenizer.tokenType.AND);
             }
             else {
-                op = this.currentToken.type;
+                op = new OperatorNode(this.currentToken.spelling);
                 this.accept(Tokenizer.tokenType.NAND);
             }
             const rhs = this.notOperation();
@@ -101,7 +102,7 @@ class Parser {
     static notOperation = () => {
         let node;
         if (this.currentToken.type === Tokenizer.tokenType.NOT) {
-            const op = this.currentToken.type;
+            const op = new OperatorNode(this.currentToken.spelling);
             this.accept(Tokenizer.tokenType.NOT);
             const child = this.notOperation();
             node = new UnaryNode(op, child);
