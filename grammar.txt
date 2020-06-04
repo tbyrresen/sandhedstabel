@@ -1,0 +1,10 @@
+Grammatik for udtryk givet i EBNF notation
+
+<expression>    ::= <biconditional>
+<biconditional> ::= <implication> {XNOR <implication>}
+<implication>   ::= <orOperation> {IMPLY <orOperation>}
+<orOperation>   ::= <andOperation> {(OR | XOR | NOR) <andOperation>}
+<andOperation>  ::= <notOperation> {(AND | NAND) <notOperation>}
+<notOperation>  ::= NOT <notOperation> | <primary>
+<primary>       ::= ( <expression> ) | <operand>
+<operand>       ::= [a-zA-Z]+
