@@ -8,9 +8,9 @@ import OperatorNode from './tree_nodes/operatorNode';
 Parses the provided tokens using a recursive descent strategy. Progresses through the tokens
 by calling the accept method to continuously match tokens according to the grammar. If the accept 
 method is called with an invalid token, an error is thrown. 
-The final result of the parse is an expression parse with a structure that guarantees the desired 
+The final result of the parse is an expression tree with a structure that guarantees the desired 
 precedence and associativty of operators given that the tree is evaluated using a depth-first 
-post-order traversal
+post-order traversal.
 */
 class Parser {
     static tokens;
